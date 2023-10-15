@@ -26,12 +26,24 @@ spec:
             cpu: 0.25
             memory: 128Mi
         livenessProbe:
+          exec:
+            command:
+              - curl
+              - -f
+              - http://localhost:80/
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
           httpGet:
             path: /
             port: 80
           initialDelaySeconds: 10
           periodSeconds: 10
           timeoutSeconds: 5
+          successThreshold: 1
           failureThreshold: 3
         startupProbe:
           tcpSocket:
