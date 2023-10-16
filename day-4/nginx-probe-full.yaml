@@ -4,12 +4,19 @@ metadata:
   labels:
     app: nginx-deployment
   name: nginx-deployment
+  namespace: giropops
 spec:
+  processDeadlineSeconds: 600
   replicas: 3
+  revisionHistoryLimit: 15
   selector:
     matchLabels:
       app: nginx-deployment
-  strategy: {}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1 
+      maxUnavailable: 1 
   template:
     metadata:
       labels:
